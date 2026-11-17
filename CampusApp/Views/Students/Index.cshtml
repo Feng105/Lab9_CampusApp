@@ -1,0 +1,74 @@
+@model CampusApp.ViewModels.StudentIndexViewModel
+@using PagedList.Mvc
+
+@{
+    ViewBag.Title = "Students";
+}
+
+<h2>Students</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<p>
+    @(String.IsNullOrWhiteSpace(Model.Search) ? "Showing all" : "You searched for " + Model.Search + " and found")
+    @Model.Students.TotalItemCount students
+</p>
+
+@using (Html.BeginForm("Index", "Students", FormMethod.Get, new { @class = "d-flex align-items-center gap-2 mb-2" }))
+{
+    <label for="Campus" class="mb-0">Filter by campus:</label>
+    @Html.DropDownListFor(vm => vm.Campus, Model.CampusFilterItems, "All", new { @class = "form-select w-auto" })
+    <label for="SortBy" class="mb-0">Sort By:</label>
+    @Html.DropDownListFor(vm => vm.SortBy, new SelectList(Model.Sorts, "Value", "Key"), "Default", new { @class = "form-select w-auto" })
+    <input type="submit" value="Filter" class="btn btn-primary" />
+    <input type="hidden" name="Search" id="Search" value="@Model.Search" />
+}
+
+@if (!String.IsNullOrEmpty(Model.Search))
+{
+    <p class="text-muted">Showing results for "@Model.Search"</p>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Students.First().Campus.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Students.First().Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Students.First().Address)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Students)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Campus.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
+
+</table>
+
+<div>
+    Page @(Model.Students.PageCount < Model.Students.PageNumber ? 0 : Model.Students.PageNumber)
+    of @Model.Students.PageCount
+    @Html.PagedListPager(Model.Students, page => Url.Action("Index", new { campus = Model.Campus, Search = Model.Search, sortBy = Model.SortBy, page }))
+</div>

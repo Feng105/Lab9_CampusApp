@@ -1,0 +1,44 @@
+GitHub Repository
+=================
+
+Repository URL : https://github.com/Feng105/Lab9_CampusApp
+Branch         : master
+
+Lab 9 has its own repository because it adds a second project (the week 10
+OnlineStore tutorial) next to the Campus App; Labs 7 and 8 stay in
+https://github.com/Feng105/Lab7_CampusApp.
+
+Repository contents
+-------------------
+README.md              - how to build and run both projects
+CampusApp.sln          - the Campus App (lab task)
+CampusApp/             - models, migrations, seed, controllers, views, view models
+Tutorial/OnlineStore.sln
+Tutorial/OnlineStore/  - the week 10 demo with product sorting and paging
+
+Lab 9 changes in CampusApp
+--------------------------
+Migrations/202611170825294_InitialDatabase.cs / .Designer.cs / .resx
+    initial migration: the four tables and the CampusID foreign key
+Migrations/202611170827176_StudentCampusValidation.cs / .Designer.cs / .resx
+    validation migration: Students.Name 50, Students.Address 100, campus Name 50, all NOT NULL
+Migrations/Configuration.cs
+    Seed: three campuses and nine students, AddOrUpdate keyed on the name
+Models/Student.cs, Models/UniversityCampus.cs
+    Required, StringLength and RegularExpression annotations with readable messages
+ViewModels/StudentIndexViewModel.cs
+    Students becomes IPagedList<Student>, adds SortBy and the Sorts dictionary
+Controllers/StudentsController.cs
+    Index takes sortBy and page, sort switch and ToPagedList(3)
+Views/Students/Index.cshtml
+    sort drop-down, Page X of Y, PagedListPager carrying campus, Search, sortBy and page
+Global.asax.cs
+    MigrateDatabaseToLatestVersion initializer so the database follows the migrations
+App_Start/BundleConfig.cs, Content/PagedList.css, packages.config, CampusApp.csproj
+    PagedList and PagedList.Mvc added, stylesheet bundled
+
+Lab 9 changes in Tutorial/OnlineStore
+-------------------------------------
+ViewModels/ProductIndexViewModel.cs   - Sorts dictionary
+Controllers/ProductsController.cs     - sort switch and ToPagedList(3)
+Views/Products/Index.cshtml           - sort drop-down and PagedListPager

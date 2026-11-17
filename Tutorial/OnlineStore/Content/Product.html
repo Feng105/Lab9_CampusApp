@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+
+    <select name="category" id="submit">
+        <option value="Home">Home</option>
+        <option value="E-device">E-device</option>
+    </select>
+
+</body>
+
+<script>
+    document.querySelector("#submit").addEventListener("change",
+
+        () => {
+            alert("hello");
+            //window.location.href = "Index?category=" + document.querySelector("#submit").value;
+            fetch("../Products/Index?category=" + document.querySelector("#submit").value).then(
+                (response) => response.json()).then(
+                    (data) => {
+
+                        
+                        data.forEach(pro => 
+                        {
+                            console.log(pro);
+                            let v = document.createElement("p");
+                            v.innerText = pro.Name;
+                            document.body.appendChild(v);
+                        })
+
+                    }
+                )
+
+        });
+</script>
+</html>
