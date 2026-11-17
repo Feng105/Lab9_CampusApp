@@ -3,6 +3,10 @@ GitHub Repository
 
 Repository URL : https://github.com/Feng105/Lab9_CampusApp
 Branch         : master
+Latest commit  : 8487623  Lab 9 - migrations, seeding, validation, sorting and paging
+
+The commit above is the one that brings all the Lab 9 files in; the repository
+also keeps an initial commit that only adds README.md.
 
 Lab 9 has its own repository because it adds a second project (the week 10
 OnlineStore tutorial) next to the Campus App; Labs 7 and 8 stay in
